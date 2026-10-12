@@ -1,0 +1,895 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Amir's First Birthday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Graduate&family=Jost:wght@400;500&display=swap">
+<style>
+/* Layout: two parts. Part one is a bright conservatory "day court" hero you can flick a ball in,
+   with a find-your-invitation gate under it. Part two (hidden until a name matches) is a personal
+   courtside ticket and a jersey-roster RSVP on pale glass.
+   Committed light look: paper, glass, deep navy ink, brass gold, one basketball orange. */
+:root{
+  color-scheme:light;
+  --paper:#FBF7EF;
+  --glass:#E6EFEF;
+  --glass-2:#D3E4E7;
+  --navy:#1B2748;
+  --navy-2:#2E3D68;
+  --gold:#B8893A;
+  --gold-text:#8A6420;
+  --orange:#E0662B;
+  --orange-text:#B8461A;
+  --mute:#55607E;
+  --line:rgba(27,39,72,.16);
+  --f-display:'Bodoni Moda','Bodoni 72',Didot,Georgia,serif;
+  --f-body:'Jost','Avenir Next','Helvetica Neue',Arial,sans-serif;
+  --f-jersey:'Graduate','Rockwell','Georgia',serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background-color:var(--paper);
+  background-image:radial-gradient(80% 40% at 50% 0%,#DCEAEC 0%,rgba(251,247,239,0) 75%);
+  color:var(--navy);font:400 16px/1.55 var(--f-body);-webkit-font-smoothing:antialiased;
+}
+.wrap{padding-inline:16px;padding-block:22px 56px}
+.card{max-width:520px;margin:0 auto;background:var(--paper);border:1px solid var(--line);box-shadow:0 18px 50px rgba(27,39,72,.12)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.eyebrow,dt,.field-label{font:500 11.5px/1.2 var(--f-body);letter-spacing:.26em;text-transform:uppercase;color:var(--gold-text)}
+h2{font:500 28px/1.15 var(--f-display);margin:8px 0;text-wrap:balance}
+.lede{margin:0;color:var(--mute);max-width:46ch}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,.seg input:focus-visible+label{outline:2px solid var(--orange);outline-offset:3px}
+
+/* ---------- hero stage ---------- */
+.stage{position:relative;background:var(--glass)}
+.stage svg{display:block;width:100%;height:auto}
+.ball-hit{
+  position:absolute;left:39%;top:80.3%;width:22%;height:13.75%;padding:0;border:0;background:none;
+  border-radius:50%;cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent;
+}
+.ball-hit:active{cursor:grabbing}
+.cta{
+  position:absolute;left:0;right:0;bottom:8px;margin-inline:auto;width:max-content;max-width:calc(100% - 24px);
+  min-height:44px;padding:0 22px;border:0;border-radius:999px;background:var(--navy);color:var(--paper);
+  font:500 12.5px/1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
+  box-shadow:0 8px 20px rgba(27,39,72,.28);
+  animation:ctain .7s 7.6s both,ctapulse 2.4s 8.4s ease-in-out infinite;
+}
+.cta:hover{background:var(--navy-2)}
+@keyframes ctain{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes ctapulse{0%,100%{box-shadow:0 8px 20px rgba(27,39,72,.28),0 0 0 0 rgba(224,102,43,.55)}50%{box-shadow:0 8px 20px rgba(27,39,72,.28),0 0 0 11px rgba(224,102,43,0)}}
+.stage-bar{
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:2px 14px;
+  padding:4px 14px 4px 18px;border-top:1px solid var(--line);background:#fff;
+  color:var(--mute);font:400 12px/1.3 var(--f-body);letter-spacing:.12em;text-transform:uppercase;
+}
+.stage-bar b{color:var(--navy);font-weight:500;font-variant-numeric:tabular-nums}
+.link-btn{background:none;border:0;color:var(--orange-text);font:inherit;letter-spacing:inherit;text-transform:inherit;min-height:44px;padding:0 4px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.pop{transform-box:fill-box;transform-origin:50% 50%}
+#net{transform-box:fill-box;transform-origin:50% 0;animation:sway 3.6s ease-in-out infinite}
+#dribble{transform-box:fill-box;transform-origin:50% 100%}
+#ball.idle #dribble{animation:dribble 1.2s cubic-bezier(.3,0,.4,1) infinite}
+#shadow{transform-box:fill-box;transform-origin:50% 50%;animation:shadow 1.2s cubic-bezier(.3,0,.4,1) infinite}
+.chev{animation:nudge 1.8s ease-in-out infinite;opacity:0}
+.chev:nth-child(2){animation-delay:.25s}.chev:nth-child(3){animation-delay:.5s}
+.spark{animation:rise var(--d) linear var(--dl) infinite;opacity:0}
+@keyframes sway{0%,100%{transform:skewX(-2.5deg)}50%{transform:skewX(2.5deg)}}
+@keyframes dribble{0%,100%{transform:translateY(0) scale(1.12,.88)}14%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-34px) scale(1,1)}86%{transform:translateY(0) scale(1,1)}}
+@keyframes shadow{0%,100%{transform:scale(1.05);opacity:.32}50%{transform:scale(.7);opacity:.14}}
+@keyframes nudge{0%{transform:translateY(8px);opacity:0}40%{opacity:.9}100%{transform:translateY(-14px);opacity:0}}
+@keyframes rise{0%{transform:translateY(0);opacity:0}15%{opacity:.85}100%{transform:translateY(-560px);opacity:0}}
+.t-eyebrow{font:500 11px var(--f-body);letter-spacing:.34em;fill:var(--gold-text);text-anchor:middle}
+.t-num{font:400 172px var(--f-jersey);text-anchor:middle}
+.t-name{font:700 58px var(--f-display);letter-spacing:.2em;fill:var(--navy);text-anchor:middle}
+.t-title{font:500 11.5px var(--f-body);letter-spacing:.34em;fill:var(--orange-text);text-anchor:middle}
+.t-sub{font:italic 500 28px var(--f-display);fill:var(--navy);text-anchor:middle}
+.t-aus{font:italic 500 18px var(--f-display);fill:var(--gold-text);text-anchor:middle}
+.t-date{font:500 11.5px var(--f-body);letter-spacing:.26em;fill:var(--mute);text-anchor:middle}
+.t-pop{font:700 26px var(--f-display);letter-spacing:.14em;fill:var(--orange-text);text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
+
+/* ---------- body ---------- */
+.body{padding:32px 20px 36px;display:grid;gap:44px}
+.invite{display:grid;gap:44px}
+.invite[hidden]{display:none}
+.gate h2{font-size:30px}
+.w-name:focus{outline:none}
+.gate{background:#fff;border:1px solid var(--line);padding:26px 20px 24px;box-shadow:0 10px 28px rgba(27,39,72,.09);margin-inline:0}
+.gate form{margin-top:16px}
+.find-row{display:flex;flex-wrap:wrap;gap:10px}
+.find-row input{flex:1 1 200px}
+.find-row .btn{flex:1 1 auto}
+.find-err{margin:12px 0 0;color:#A8321A}
+.find-err[hidden]{display:none}
+.count{display:flex;gap:8px;margin-top:16px}
+.count div{flex:1;text-align:center;background:#fff;border:1px solid var(--line);padding:10px 4px 8px}
+.count b{display:block;font:400 24px/1 var(--f-jersey);color:var(--navy);font-variant-numeric:tabular-nums}
+.count small{display:block;margin-top:5px;font:500 10px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text)}
+.count-cap{margin:14px 0 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;
+  border:1px solid var(--navy);background:transparent;color:var(--navy);border-radius:2px;
+  font:500 12.5px/1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;cursor:pointer;
+}
+.btn:hover{background:rgba(27,39,72,.07)}
+.btn.primary{background:var(--navy);color:var(--paper)}
+.btn.primary:hover{background:var(--navy-2)}
+
+/* ticket */
+.ticket{position:relative;background:#fff;border:1px solid var(--line);box-shadow:0 10px 28px rgba(27,39,72,.09)}
+.ticket-main{padding:24px 20px 6px}
+.ticket-main h2{font-size:30px;margin:6px 0 2px}
+.ticket-main .sub{margin:0;font:italic 500 18px/1.3 var(--f-display);color:var(--orange-text)}
+.ticket-main .aus{margin:4px 0 0;font:italic 500 16px/1.35 var(--f-display);color:var(--gold-text)}
+dl.facts{margin:18px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.facts>div{padding:12px 0 14px;border-top:1px solid var(--line);min-width:0}
+.facts .wide{grid-column:1/-1}
+dd{margin:6px 0 0;font:500 19px/1.3 var(--f-display)}
+.perf{position:relative;margin:14px 0 0;border-top:2px dashed rgba(27,39,72,.22)}
+.perf::before,.perf::after{content:"";position:absolute;top:-13px;width:13px;height:24px;background:var(--paper);border:1px solid var(--line)}
+.perf::before{left:-1px;border-left:0;border-radius:0 12px 12px 0}
+.perf::after{right:-1px;border-right:0;border-radius:12px 0 0 12px}
+.stub{display:flex;gap:16px;align-items:center;padding:18px 20px 22px}
+.admit{flex:none;text-align:center;border:1.5px solid var(--gold);padding:8px 14px;min-width:96px}
+.admit small{display:block;font:500 10.5px/1 var(--f-body);letter-spacing:.3em;color:var(--gold-text);text-transform:uppercase}
+.admit strong{display:block;margin-top:4px;font:400 28px/1 var(--f-jersey);color:var(--navy);letter-spacing:.04em}
+.stub-text{min-width:0}
+.stub-text p{margin:0;color:var(--mute);font-size:14px;line-height:1.45}
+.stub-text .who{color:var(--navy);font:500 18px/1.25 var(--f-display);margin-bottom:6px;overflow-wrap:anywhere}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.chip{width:22px;height:22px;fill:var(--navy)}
+.chips.in .chip{animation:stamp .5s cubic-bezier(.2,1.5,.4,1) backwards}
+@keyframes stamp{from{transform:scale(1.8) rotate(-12deg);opacity:0}}
+.toast{margin:-12px 0 -8px;text-align:center;font:italic 500 19px/1.4 var(--f-display);color:var(--navy-2);text-wrap:balance}
+.toast::before{content:"";display:block;width:44px;height:1px;background:var(--gold);margin:0 auto 14px}
+
+
+/* ---------- part two: welcome scene ---------- */
+.welcome{
+  position:relative;overflow:hidden;min-height:640px;padding:40px 20px 34px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  background:radial-gradient(70% 38% at 50% 22%,rgba(255,241,204,.9),rgba(255,241,204,0) 72%),linear-gradient(#D5E6EA,#EDF3F0 58%,#FBF7EF);
+}
+.welcome::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent 0,transparent calc(33.333% - 1px),rgba(184,137,58,.3) calc(33.333% - 1px),rgba(184,137,58,.3) 33.333%);
+}
+.welcome>*:not(.door){position:relative;z-index:1}
+.door{
+  position:absolute;top:0;bottom:0;width:50.5%;z-index:5;
+  background:linear-gradient(115deg,rgba(255,255,255,.92),rgba(205,224,228,.96));
+  border:1px solid var(--gold);
+  box-shadow:inset 0 0 0 10px rgba(255,255,255,.35),inset 0 0 0 11px rgba(184,137,58,.5);
+}
+.door.l{left:0}.door.r{right:0}
+.door::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(rgba(184,137,58,.35),rgba(184,137,58,.35)) 50% 0/1px 100% no-repeat,linear-gradient(rgba(184,137,58,.35),rgba(184,137,58,.35)) 0 50%/100% 1px no-repeat;
+}
+.door::after{content:"";position:absolute;top:46%;width:6px;height:64px;border-radius:3px;background:linear-gradient(var(--gold),#D9B567)}
+.door.l::after{right:14px}.door.r::after{left:14px}
+.w-name{font:700 34px/1.1 var(--f-display);letter-spacing:.04em;margin:10px 0 6px;max-width:100%;overflow-wrap:anywhere;color:var(--navy);text-wrap:balance}
+.w-line{margin:0;color:var(--mute);font:italic 500 19px/1.3 var(--f-display)}
+.w-row{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:320px;margin:16px auto 0}
+.wj{position:relative;width:44px;height:44px}
+.wj svg{width:100%;height:100%;fill:var(--navy)}
+.wj span{position:absolute;inset:0;display:grid;place-items:center;padding-top:14%;font:400 14px/1 var(--f-jersey);color:var(--paper)}
+.tk{display:flex;align-items:stretch;background:#fff;border:1px solid var(--line);box-shadow:0 10px 28px rgba(27,39,72,.14);width:100%;max-width:340px;margin:20px auto 0;text-align:left}
+.tk-main{flex:1;padding:12px 14px;min-width:0}
+.tk-main .eyebrow{font-size:10px}
+.tk-main strong{display:block;margin-top:5px;font:500 18px/1.2 var(--f-display)}
+.tk-main span{display:block;margin-top:2px;font-size:13px;color:var(--mute)}
+.tk-stub{width:88px;flex:none;border-left:2px dashed rgba(27,39,72,.3);display:grid;place-items:center;padding:8px 6px;background:#fff;transform-origin:0 100%;box-shadow:0 0 0 0 rgba(27,39,72,0)}
+.tk-stub small{display:block;font:500 10px/1 var(--f-body);letter-spacing:.3em;color:var(--gold-text);text-transform:uppercase}
+.tk-stub b{display:block;margin-top:5px;font:400 22px/1 var(--f-jersey);color:var(--navy);letter-spacing:.04em}
+.welcome .count{width:100%;max-width:340px}
+.welcome .count-cap{margin-top:22px}
+.welcome .btn{margin-top:22px}
+.welcome .link-btn{margin-top:6px}
+#w-cta{animation:ctapulse 2.4s 6.4s ease-in-out infinite}
+
+/* rsvp */
+.rsvp{background:var(--glass);margin-inline:-20px;padding:34px 20px 36px;border-block:1px solid var(--line)}
+form{margin-top:16px}
+.field-label{display:block;margin:20px 0 8px}
+fieldset{border:0;margin:20px 0 0;padding:0;min-width:0}
+fieldset .field-label{margin-top:0}
+legend{padding:0}
+input[type=text],textarea{
+  width:100%;font:400 16px/1.4 var(--f-body);color:var(--navy);background:#fff;
+  border:1px solid var(--line);padding:12px 14px;border-radius:2px;
+}
+textarea{resize:vertical;min-height:72px}
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{display:grid;place-items:center;min-height:50px;padding:6px 8px;text-align:center;cursor:pointer;background:#fff;border:1px solid var(--line);color:var(--navy);font:400 15px/1.25 var(--f-body)}
+.seg input:checked+label{background:var(--navy);border-color:var(--navy);color:var(--paper);font-weight:500}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:10px;margin:4px 0 8px}
+.seat{position:relative;aspect-ratio:1;border:0;background:none;padding:0;cursor:pointer}
+.seat svg{width:100%;height:100%;fill:var(--navy);stroke:var(--navy);stroke-width:.7;stroke-linejoin:round;transition:fill .2s,transform .2s,stroke .2s}
+.seat .jn{position:absolute;inset:0;display:grid;place-items:center;padding-top:14%;font:400 19px/1 var(--f-jersey);color:var(--paper)}
+.seat[aria-pressed=false] svg{fill:transparent;stroke:rgba(27,39,72,.45);stroke-dasharray:2 1.6}
+.seat[aria-pressed=false] .jn{color:var(--mute)}
+.seat:active svg{transform:scale(.92)}
+.seat-sum{margin:6px 0 0;font:500 17px/1.3 var(--f-display);min-height:1.4em}
+.hint-line{margin:4px 0 0;color:var(--mute);font-size:14px}
+.submit{margin-top:24px;width:100%}
+.error{margin:12px 0 0;color:#A8321A}
+.send{margin-top:18px;border:1px solid var(--line);padding:20px 18px;background:#fff}
+.send h3{margin:0 0 6px;font:500 22px/1.2 var(--f-display)}
+.send p{margin:0 0 14px;color:var(--mute)}
+.msg{margin:0 0 16px;padding:14px;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--paper);border:1px dashed rgba(27,39,72,.3);font:400 15px/1.5 var(--f-body)}
+.status{min-height:1.5em;margin:10px 0 0;color:var(--orange-text);font-size:14px}
+.small{font-size:14px;color:var(--mute);margin:14px 0 0}
+.small strong{color:var(--navy);font-weight:500;user-select:all}
+.foot{padding:26px 22px 30px;text-align:center;background:var(--navy);color:var(--paper)}
+.foot p{margin:0;font:italic 500 22px/1.3 var(--f-display)}
+.foot small{display:block;margin-top:8px;color:#C9D2E6;letter-spacing:.22em;text-transform:uppercase;font-size:11px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){.cta,#w-cta{animation:none}.door{display:none}}
+@media (max-width:359px){.facts{grid-template-columns:1fr}.seg{grid-template-columns:1fr}.stub{flex-direction:column;align-items:flex-start}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs><symbol id="jersey" viewBox="0 0 24 24"><path d="M8 2.5 2 5.5l1.8 4.2 2.7-1.1V21.5h11V8.6l2.7 1.1L22 5.5l-6-3c-.4 1.6-1.9 2.6-4 2.6s-3.6-1-4-2.6z"/></symbol></defs>
+</svg>
+
+<main class="wrap">
+  <article class="card">
+    <h1 class="vh">Amir's 1st birthday and Ausbue celebration, Friday, October 30, 2026</h1>
+
+    <div class="stage" id="stage">
+      <svg id="scene" viewBox="0 0 400 640" role="img" aria-label="Animated invitation: a basketball swishes through a hoop above a navy jersey number 1. Amir, the Rookie of the Year, is turning one and finally celebrating his Ausbue.">
+        <defs>
+          <linearGradient id="gBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D5E6EA"/><stop offset=".55" stop-color="#EDF3F0"/><stop offset="1" stop-color="#FBF7EF"/></linearGradient>
+          <radialGradient id="gSun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFF1CC" stop-opacity=".95"/><stop offset=".6" stop-color="#FFF1CC" stop-opacity=".35"/><stop offset="1" stop-color="#FFF1CC" stop-opacity="0"/></radialGradient>
+          <linearGradient id="gNum" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34447A"/><stop offset="1" stop-color="#1B2748"/></linearGradient>
+          <linearGradient id="gShine" gradientUnits="objectBoundingBox" x1="-0.8" y1="0" x2="-0.3" y2="0.45">
+            <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            <animate attributeName="x1" values="-0.8;1.3;1.3" keyTimes="0;.4;1" dur="5s" repeatCount="indefinite"/>
+            <animate attributeName="x2" values="-0.3;1.8;1.8" keyTimes="0;.4;1" dur="5s" repeatCount="indefinite"/>
+          </linearGradient>
+          <radialGradient id="gBall" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#F59556"/><stop offset=".6" stop-color="#E0662B"/><stop offset="1" stop-color="#A8431A"/></radialGradient>
+        </defs>
+        <rect width="400" height="640" fill="url(#gBg)"/>
+        <circle cx="200" cy="262" r="200" fill="url(#gSun)"/>
+        <!-- glass house panes -->
+        <g fill="#fff" fill-opacity=".28" stroke="#B8893A" stroke-opacity=".55" stroke-width="1.2">
+          <path d="M14 580V150a62 62 0 0 1 124 0V580z"/>
+          <path d="M138 580V150a62 62 0 0 1 124 0V580z" fill-opacity=".45"/>
+          <path d="M262 580V150a62 62 0 0 1 124 0V580z"/>
+        </g>
+        <g fill="none" stroke="#B8893A" stroke-opacity=".28" stroke-width="1">
+          <path d="M26 580V152a50 50 0 0 1 100 0V580M150 580V152a50 50 0 0 1 100 0V580M274 580V152a50 50 0 0 1 100 0V580"/>
+          <path d="M76 100V580M324 100V580M14 262H386M14 430H386"/>
+        </g>
+        <g id="sparkles"></g>
+        <circle cx="200" cy="262" r="124" fill="none" stroke="#E0662B" stroke-opacity=".28"/>
+        <circle cx="200" cy="262" r="116" fill="none" stroke="#B8893A" stroke-opacity=".3"/>
+        <!-- floor -->
+        <rect y="580" width="400" height="60" fill="#E8C896" fill-opacity=".55"/>
+        <path d="M40 580V640M100 580V640M160 580V640M220 580V640M280 580V640M340 580V640" stroke="#B8893A" stroke-opacity=".18"/>
+        <line x1="0" x2="400" y1="580" y2="580" stroke="#B8893A" stroke-opacity=".7" stroke-width="1.5"/>
+        <!-- backboard -->
+        <rect x="162" y="52" width="76" height="52" rx="2" fill="#fff" fill-opacity=".8" stroke="#B8893A" stroke-width="1.5"/>
+        <rect x="186" y="76" width="28" height="22" fill="none" stroke="#E0662B" stroke-width="1.5"/>
+        <!-- jersey number -->
+        <g id="num" class="pop">
+          <text class="t-num" x="204" y="306" fill="#B8893A" opacity=".5">1</text>
+          <text class="t-num" x="200" y="302" fill="url(#gNum)">1</text>
+          <text class="t-num" x="200" y="302" fill="url(#gShine)">1</text>
+        </g>
+        <text id="t-eyebrow" class="t-eyebrow" x="201.9" y="32">YOU'RE INVITED TO</text>
+        <text id="t-name" class="t-name pop" x="205.8" y="384">AMIR</text>
+        <g id="t-rule" class="pop" stroke="#B8893A" stroke-width="1" fill="none">
+          <path d="M118 408H182M218 408H282"/>
+          <path d="M200 402l6 6-6 6-6-6z" fill="#E0662B" stroke="none"/>
+        </g>
+        <text id="t-title" class="t-title" x="202" y="436">THE ROOKIE OF THE YEAR</text>
+        <text id="t-sub" class="t-sub" x="200" y="470">is turning one</text>
+        <text id="t-aus" class="t-aus" x="200" y="496">and finally celebrating his Ausbue</text>
+        <text id="t-date" class="t-date" x="201.5" y="524">FRIDAY &#183; OCTOBER 30 &#183; 6 PM</text>
+        <!-- net and rim -->
+        <g id="net" fill="none" stroke="#1B2748" stroke-opacity=".6" stroke-width="1.2">
+          <path d="M173 117L186 165M182 121L192 167M191 122L197 169M200 123V169M209 122L203 169M218 121L208 167M227 117L214 165"/>
+          <path d="M177 135Q200 143 223 135M181 151Q200 158 219 151"/>
+        </g>
+        <ellipse cx="200" cy="115" rx="28" ry="6" fill="none" stroke="#E0662B" stroke-width="3.5"/>
+        <ellipse id="shadow" cx="200" cy="578" rx="20" ry="4.5" fill="#1B2748"/>
+        <g id="aim" fill="#E0662B"></g>
+        <g id="hint" transform="translate(200 510)" fill="none" stroke="#E0662B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path class="chev" d="M-9 0l9-9 9 9"/><path class="chev" d="M-9 -12l9-9 9 9"/><path class="chev" d="M-9 -24l9-9 9 9"/>
+        </g>
+        <!-- ball -->
+        <g id="ball" class="idle" transform="translate(200 558)">
+          <g id="dribble">
+            <circle r="22" fill="url(#gBall)"/>
+            <g fill="none" stroke="#3B1507" stroke-width="1.5" stroke-linecap="round">
+              <path d="M0-22V22M-22 0H22"/>
+              <path d="M-15.6-15.6Q-7 0-15.6 15.6M15.6-15.6Q7 0 15.6 15.6"/>
+              <circle r="22"/>
+            </g>
+          </g>
+        </g>
+        <g id="confetti"></g>
+        <text id="pop" class="t-pop pop" x="200" y="236" opacity="0">SWISH!</text>
+      </svg>
+      <button type="button" class="ball-hit" id="ball-hit" aria-label="Basketball. Drag it upward and let go to shoot, or press Enter to take a shot."></button>
+      <button type="button" class="cta" id="cta">Find your invitation <span aria-hidden="true">&darr;</span></button>
+    </div>
+    <div class="stage-bar" id="stage-bar">
+      <span id="hint-text">Flick the ball up to shoot</span>
+      <span>Buckets <b id="score">0</b></span>
+      <button type="button" class="link-btn" id="replay">Replay</button>
+    </div>
+
+    <!-- PART TWO, scene one: welcome (hidden until a name matches) -->
+    <section class="welcome" id="welcome" hidden aria-labelledby="w-name">
+      <div class="door l" aria-hidden="true"></div><div class="door r" aria-hidden="true"></div>
+      <div class="eyebrow" id="w-eyebrow">Welcome</div>
+      <h2 class="w-name" id="w-name" tabindex="-1"></h2>
+      <p class="w-line" id="w-line"></p>
+      <div class="w-row" id="w-row" aria-hidden="true"></div>
+      <div class="tk" id="tk">
+        <div class="tk-main"><div class="eyebrow">Courtside admission</div><strong>Amir's First Birthday</strong><span>Fri, Oct 30 &middot; 6 PM</span></div>
+        <div class="tk-stub" id="tk-stub"><div><small>Admit</small><b id="tk-admit">TWO</b></div></div>
+      </div>
+      <p class="eyebrow count-cap" id="w-cap">Until tip-off</p>
+      <div class="count" id="count" aria-hidden="true">
+        <div><b id="c-d">0</b><small>Days</small></div>
+        <div><b id="c-h">0</b><small>Hrs</small></div>
+        <div><b id="c-m">0</b><small>Min</small></div>
+        <div><b id="c-s">0</b><small>Sec</small></div>
+      </div>
+      <button type="button" class="btn primary" id="w-cta">See details &amp; RSVP &darr;</button>
+      <button type="button" class="link-btn" id="switch">Not you? Use a different name</button>
+    </section>
+
+    <div class="body">
+      <!-- PART ONE: find your invitation -->
+      <section class="gate" id="gate" aria-labelledby="gate-h">
+        <div class="eyebrow">Open your invitation</div>
+        <h2 id="gate-h">Who are we celebrating with?</h2>
+        <p class="lede">Type your first and last name to find your invitation.</p>
+        <form id="find" novalidate>
+          <label class="vh" for="lookup">Your first and last name</label>
+          <div class="find-row">
+            <input type="text" id="lookup" name="lookup" autocomplete="name" autocapitalize="words" placeholder="First and last name" enterkeyhint="go">
+            <button type="submit" class="btn primary">Open my invitation</button>
+          </div>
+          <p class="find-err" id="find-err" role="alert" hidden></p>
+        </form>
+      </section>
+
+      <!-- PART TWO: the invitation (hidden until a name matches) -->
+      <div class="invite" id="invite" hidden>
+        <section aria-label="Event details">
+          <div class="ticket">
+            <div class="ticket-main">
+              <div class="eyebrow">Courtside admission</div>
+              <h2>Amir's First Birthday</h2>
+              <p class="sub">Rookie of the Year celebration</p>
+              <p class="aus">His Ausbue, a year in the making.</p>
+              <dl class="facts">
+                <div><dt>Date</dt><dd>Friday, October 30, 2026</dd></div>
+                <div><dt>Time</dt><dd>6:00 to 11:00 PM</dd></div>
+                <div class="wide"><dt>Place</dt><dd>Old San Francisco Steak House<br>10223 Sahara St<br>San Antonio, Texas 78216</dd></div>
+                <div><dt>Attire</dt><dd>Semi-formal, with a nod to the court</dd></div>
+                <div><dt>Dinner</dt><dd>Served at the table</dd></div>
+              </dl>
+              <div class="actions">
+                <a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Old+San+Francisco+Steak+House+10223+Sahara+St+San+Antonio+TX+78216">Directions</a>
+                <a class="btn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Amir%27s+1st+Birthday&dates=20261030T180000%2F20261030T230000&ctz=America%2FChicago&location=Old+San+Francisco+Steak+House%2C+10223+Sahara+St%2C+San+Antonio%2C+TX+78216&details=The+Rookie+of+the+Year+is+turning+one.">Add to calendar</a>
+              </div>
+            </div>
+            <div class="perf"></div>
+            <div class="stub">
+              <div class="admit" id="admit-box"><small>Admit</small><strong id="admit-word">TWO</strong></div>
+              <div class="stub-text">
+                <p class="who" id="stub-who"></p>
+                <p id="stub-note"></p>
+                <div class="chips" id="chips" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <p class="toast">And a quiet toast to Sara, the mother who brought Amir into the world, with all our love.</p>
+
+        <section class="rsvp" aria-labelledby="rsvp-h">
+          <div class="eyebrow">RSVP</div>
+          <h2 id="rsvp-h">Will you join us?</h2>
+          <p class="lede" id="rsvp-lede"></p>
+
+          <form id="rsvp-form" novalidate>
+            <label class="field-label" for="name">Your name</label>
+            <input type="text" id="name" name="name" autocomplete="name" placeholder="First and last name">
+
+            <fieldset>
+              <legend class="field-label">Your answer</legend>
+              <div class="seg">
+                <input type="radio" id="attend-yes" name="attend" value="yes" checked>
+                <label for="attend-yes">Joyfully accept</label>
+                <input type="radio" id="attend-no" name="attend" value="no">
+                <label for="attend-no">Regretfully decline</label>
+              </div>
+            </fieldset>
+
+            <div id="roster-wrap">
+              <div class="field-label" id="roster-label">Who is coming</div>
+              <div class="roster" id="roster" role="group" aria-labelledby="roster-label"></div>
+              <p class="seat-sum" id="seat-sum" aria-live="polite"></p>
+              <p class="hint-line">Tap a jersey to take someone off if they can't make it.</p>
+            </div>
+
+            <label class="field-label" for="note">A note for Amir (optional)</label>
+            <textarea id="note" name="note" rows="2" placeholder="A wish, a story, or a scouting report"></textarea>
+
+            <p class="error" id="err" role="alert" hidden></p>
+            <button type="submit" class="btn primary submit">Prepare my RSVP</button>
+          </form>
+
+          <div class="send" id="send" hidden>
+            <h3>One last step</h3>
+            <p>Your RSVP is not sent until you send this message to Sara.</p>
+            <pre class="msg" id="msg"></pre>
+            <div class="actions">
+              <a class="btn primary" id="sms" href="#">Text it</a>
+              <button type="button" class="btn" id="copy">Copy message</button>
+            </div>
+            <p class="status" id="status" role="status"></p>
+            <p class="small">You can also send it to <strong>(210) 762-0133</strong>.</p>
+            <button type="button" class="link-btn" id="edit">Change my answer</button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="foot">
+      <p>With love, Rami &amp; Sara</p>
+      <small>Amir &middot; Year One</small>
+    </div>
+  </article>
+</main>
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  var PHONE='12107620133',PHONE_TXT='(210) 762-0133';
+  var WORDS=['','ONE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE','TEN','ELEVEN','TWELVE'];
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var svg=$('#scene'),ball=$('#ball'),net=$('#net'),confettiG=$('#confetti'),aimG=$('#aim'),shadow=$('#shadow'),hit=$('#ball-hit');
+
+  /* =====================  GUEST REGISTRY  =====================
+     Only salted hashes of names are stored (no readable names), each pointing to the number of
+     guests invited. A guest has to type their own name to find their entry. */
+  var SALT='amir1-oct30';
+  var REG={"2dzhn13al80":2,"199ul0bu6cm":2,"25mclzpan2a":2,"eza8h9v6nz":1,"14c9aq4qr5w":1,"1z3cpzx8zd6":4,"2646ke6pt2f":4,"1f7g8emk3yi":4};
+  function cyrb53(str){
+    var h1=0xdeadbeef,h2=0x41c6ce57,i,ch;
+    for(i=0;i<str.length;i++){
+      ch=str.charCodeAt(i);
+      h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677);
+    }
+    h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);
+    h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);
+    return 4294967296*(2097151&h2)+(h1>>>0);
+  }
+  function norm(s){
+    try{s=(s||'').normalize('NFD').replace(/\p{M}/gu,'')}catch(e){s=(s||'')}
+    s=s.toLowerCase();
+    try{s=s.replace(/[^\p{L}\p{N}\s]/gu,' ')}catch(e){s=s.replace(/[^a-z0-9\s]/g,' ')}
+    var t=s.split(/\s+/).filter(function(x){return x.length>1});
+    t.sort();
+    return t.join(' ');
+  }
+  function keyOf(s){return cyrb53(SALT+'|'+norm(s)).toString(36)}
+  function lookup(raw){
+    var n=norm(raw);if(!n)return 0;
+    var k=cyrb53(SALT+'|'+n).toString(36);
+    return Object.prototype.hasOwnProperty.call(REG,k)?REG[k]:0;
+  }
+  function titleCase(s){
+    s=s.replace(/,/g,' ').trim().replace(/\s+/g,' ');
+    if(s===s.toUpperCase()||s===s.toLowerCase())s=s.toLowerCase();else return s;
+    try{return s.replace(/(^|\s)(\p{L})/gu,function(m,a,b){return a+b.toUpperCase()})}catch(e){return s}
+  }
+
+  /* =====================  PARTY / INVITATION  ===================== */
+  var party={label:'',seats:0};
+  var on=[];
+
+  function applyParty(label,n){
+    party={label:label,seats:n};
+    on=[];for(var i=0;i<n;i++)on.push(true);
+    renderParty();
+  }
+  function renderParty(){
+    var n=party.seats,g=n===1?' guest':' guests';
+    $('#w-name').textContent=party.label;
+    $('#w-line').textContent='Your invitation is for '+n+g+'.';
+    $('#tk-admit').textContent=WORDS[n]||String(n);
+    var row=$('#w-row');row.innerHTML='';
+    for(var k=0;k<n;k++){var j=document.createElement('div');j.className='wj';j.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#jersey"/></svg><span>'+(k+1)+'</span>';row.appendChild(j)}
+    $('#admit-word').textContent=WORDS[n]||String(n);
+    $('#stub-who').textContent='Invited: '+party.label;
+    $('#stub-note').textContent='Open seating. This invitation covers '+n+g+', which helps us plan the dinner.';
+    $('#rsvp-lede').textContent='Your invitation is for '+n+g+'. Confirm everyone, or take off anyone who can’t make it.';
+    var chips=$('#chips');chips.innerHTML='';chips.classList.remove('in');
+    for(var i=0;i<n;i++){
+      var s=document.createElementNS(NS,'svg');s.setAttribute('class','chip');s.setAttribute('viewBox','0 0 24 24');
+      s.style.animationDelay=(i*90)+'ms';
+      var u=document.createElementNS(NS,'use');u.setAttribute('href','#jersey');s.appendChild(u);chips.appendChild(s);
+    }
+    watchChips();
+    renderRoster();
+  }
+  function renderRoster(){
+    var box=$('#roster');box.innerHTML='';
+    for(var i=0;i<party.seats;i++){
+      (function(i){
+        var b=document.createElement('button');b.type='button';b.className='seat';
+        b.setAttribute('aria-pressed',on[i]?'true':'false');
+        b.setAttribute('aria-label','Guest '+(i+1));
+        b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#jersey"/></svg><span class="jn">'+(i+1)+'</span>';
+        b.addEventListener('click',function(){on[i]=!on[i];b.setAttribute('aria-pressed',on[i]?'true':'false');renderSum()});
+        box.appendChild(b);
+      })(i);
+    }
+    renderSum();
+  }
+  function seatCount(){return on.filter(Boolean).length}
+  function renderSum(){
+    var c=seatCount(),n=party.seats;
+    $('#seat-sum').textContent=c===0?'No one confirmed yet':(c===n?(n===1?'1 guest confirmed':'All '+n+' guests confirmed'):c+' of '+n+' guests confirmed');
+  }
+  var chipObs=null;
+  function watchChips(){
+    var el=$('#chips');
+    if(reduce||!('IntersectionObserver' in window)){el.classList.add('in');return}
+    if(chipObs)chipObs.disconnect();
+    chipObs=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){el.classList.add('in');chipObs.disconnect()}});
+    },{threshold:.6});
+    chipObs.observe(el);
+  }
+
+  /* countdown to 6 PM Central, Oct 30 2026 (CDT = UTC-5) */
+  var TIPOFF=Date.UTC(2026,9,30,23,0,0),cTimer=0;
+  function tick(){
+    var d=TIPOFF-Date.now();
+    if(d<=0){$('#c-d').textContent='0';$('#c-h').textContent='0';$('#c-m').textContent='0';$('#c-s').textContent='0';return}
+    var s=Math.floor(d/1000);
+    $('#c-d').textContent=Math.floor(s/86400);
+    $('#c-h').textContent=Math.floor(s%86400/3600);
+    $('#c-m').textContent=Math.floor(s%3600/60);
+    $('#c-s').textContent=s%60;
+  }
+  function startCount(){tick();clearInterval(cTimer);cTimer=setInterval(tick,reduce?30000:1000)}
+
+  /* gate */
+  function showErr(msg){var e=$('#find-err');e.textContent=msg;e.hidden=false;$('#lookup').setAttribute('aria-invalid','true')}
+  $('#find').addEventListener('submit',function(e){
+    e.preventDefault();
+    var raw=$('#lookup').value;
+    if(!raw.trim()){showErr('Please type your first and last name.');$('#lookup').focus();return}
+    var n=lookup(raw);
+    if(!n){
+      showErr('We could not find that name. Try it the way we would write it on a card, or text Sara at '+PHONE_TXT+'.');
+      if(!reduce)$('#find-err').animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:320});
+      return;
+    }
+    $('#find-err').hidden=true;$('#lookup').removeAttribute('aria-invalid');
+    var label=titleCase(raw);
+    applyParty(label,n);
+    $('#name').value=label;
+    openWelcome();
+  });
+  var ease='cubic-bezier(.2,.7,.2,1)';
+  function playWelcome(){
+    var W=$('#welcome');
+    W.getAnimations({subtree:true}).forEach(function(a){a.cancel()});
+    if(reduce)return;
+    var E=function(s){return W.querySelector(s)};
+    var up=function(sel,delay,y,d){E(sel).animate([{opacity:0,transform:'translateY('+y+'px)'},{opacity:1,transform:'none'}],{duration:d||800,delay:delay,easing:ease,fill:'both'})};
+    E('.door.l').animate([{transform:'none'},{transform:'translateX(-100%)'}],{duration:1500,delay:300,easing:'cubic-bezier(.65,0,.35,1)',fill:'both'});
+    E('.door.r').animate([{transform:'none'},{transform:'translateX(100%)'}],{duration:1500,delay:300,easing:'cubic-bezier(.65,0,.35,1)',fill:'both'});
+    up('#w-eyebrow',1300,8);
+    E('#w-name').animate([{opacity:0,transform:'scale(.85)'},{opacity:1,transform:'none'}],{duration:900,delay:1600,easing:'cubic-bezier(.2,1.3,.4,1)',fill:'both'});
+    up('#w-line',2100,8);
+    W.querySelectorAll('.wj').forEach(function(j,i){
+      j.animate([{opacity:0,transform:'translateY(-30px) scale(.3) rotate(-20deg)'},{opacity:1,transform:'translateY(0) scale(1.15) rotate(4deg)',offset:.6},{opacity:1,transform:'none'}],{duration:650,delay:2400+i*150,easing:'cubic-bezier(.3,0,.3,1)',fill:'both'});
+    });
+    var d=2700+Math.min(party.seats,6)*150;
+    E('#tk').animate([{opacity:0,transform:'translateY(-46px)'},{opacity:1,transform:'translateY(6px)',offset:.7},{opacity:1,transform:'none'}],{duration:800,delay:d,easing:ease,fill:'both'});
+    E('#tk-stub').animate([{transform:'none',boxShadow:'0 0 0 0 rgba(27,39,72,0)'},{transform:'translate(5px,-4px) rotate(-4deg)',offset:.25},{transform:'translate(16px,10px) rotate(9deg)',boxShadow:'0 8px 16px rgba(27,39,72,.2)'}],{duration:800,delay:d+1100,easing:'cubic-bezier(.5,0,.2,1)',fill:'both'});
+    up('#w-cap',d+2000,8);
+    up('#count',d+2100,10);
+    up('#w-cta',d+2700,10);
+  }
+  function openWelcome(){
+    $('#stage').hidden=true;$('#stage-bar').hidden=true;$('.body').hidden=true;$('#invite').hidden=true;
+    $('#welcome').hidden=false;
+    startCount();playWelcome();
+    window.scrollTo(0,0);
+    try{$('#w-name').focus({preventScroll:true})}catch(x){}
+  }
+  $('#w-cta').addEventListener('click',function(){
+    var body=$('.body'),inv=$('#invite'),first=inv.hidden;
+    body.hidden=false;$('#gate').hidden=true;inv.hidden=false;
+    if(first&&!reduce){
+      inv.animate([{clipPath:'inset(0 50% 0 50%)',opacity:.2},{clipPath:'inset(0 0 0 0)',opacity:1}],{duration:900,easing:ease});
+      $('#admit-box').animate([{transform:'scale(1.7) rotate(-8deg)',opacity:0},{transform:'none',opacity:1}],{duration:650,delay:900,easing:'cubic-bezier(.2,1.4,.4,1)',fill:'backwards'});
+    }
+    setTimeout(function(){body.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})},60);
+  });
+  $('#switch').addEventListener('click',function(){
+    $('#welcome').hidden=true;$('#invite').hidden=true;$('.body').hidden=false;$('#gate').hidden=false;
+    $('#stage').hidden=false;$('#stage-bar').hidden=reduce;
+    clearInterval(cTimer);$('#lookup').value='';$('#send').hidden=true;$('#rsvp-form').hidden=false;$('#name').value='';
+    $('#gate').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+    try{$('#lookup').focus({preventScroll:true})}catch(x){}
+  });
+  $('#cta').addEventListener('click',function(){
+    $('#gate').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+    setTimeout(function(){try{$('#lookup').focus({preventScroll:true})}catch(x){}},reduce?0:500);
+  });
+
+  function copyText(t,cb){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){cb(true)},function(){cb(false)});
+    }else cb(false);
+  }
+
+  /* =====================  HERO: ALIVE + PLAYABLE  ===================== */
+  var G=1500,FLOOR=580,R=22,HOME={x:200,y:558},K=12,RIM_Y=115;
+  var st='idle',bx=HOME.x,by=HOME.y,vx=0,vy=0,rot=0,vr=0,slow=1,scored=false,userShot=false;
+  var raf=0,last=0,flightT=0,restT=0,ret=null,timers=[],score=0,interacted=false,stageVisible=true;
+
+  function place(){ball.setAttribute('transform','translate('+bx.toFixed(1)+' '+by.toFixed(1)+') rotate('+rot.toFixed(1)+')')}
+  function setIdleVisuals(idle){
+    if(idle)ball.classList.add('idle');else ball.classList.remove('idle');
+    shadow.style.visibility=idle?'visible':'hidden';
+  }
+  function toSvg(e){
+    var r=svg.getBoundingClientRect();
+    return {x:(e.clientX-r.left)/r.width*400,y:(e.clientY-r.top)/r.height*640};
+  }
+
+  function confetti(x,y,n){
+    if(reduce)return;
+    var cols=['#E0662B','#B8893A','#1B2748','#F3C34E','#6FA5B3'];
+    for(var i=0;i<n;i++){
+      var round=Math.random()<.4;
+      var el=document.createElementNS(NS,round?'circle':'rect');
+      if(round){el.setAttribute('r','2.6')}else{el.setAttribute('width','5');el.setAttribute('height','9');el.setAttribute('x','-2.5');el.setAttribute('y','-4.5')}
+      el.setAttribute('fill',cols[i%cols.length]);
+      confettiG.appendChild(el);
+      var dx=(Math.random()-.5)*340,up=60+Math.random()*130,fall=300+Math.random()*260,rot2=(Math.random()-.5)*900,dur=1800+Math.random()*1300;
+      var a=el.animate([
+        {transform:'translate('+x+'px,'+y+'px) rotate(0deg)',opacity:1,offset:0,easing:'cubic-bezier(.2,.7,.4,1)'},
+        {transform:'translate('+(x+dx*.6)+'px,'+(y-up)+'px) rotate('+(rot2*.4)+'deg)',opacity:1,offset:.28,easing:'cubic-bezier(.4,0,.9,.6)'},
+        {transform:'translate('+(x+dx)+'px,'+(y+fall)+'px) rotate('+rot2+'deg)',opacity:0,offset:1}
+      ],{duration:dur,fill:'both'});
+      (function(node){a.onfinish=function(){node.remove()}})(el);
+    }
+  }
+  var CHEERS=['SWISH!','BUCKET!','NOTHING BUT NET!','CLEAN!','CAN’T MISS!'];
+  function popText(t){
+    var p=$('#pop');p.textContent=t;
+    p.getAnimations().forEach(function(a){a.cancel()});
+    p.animate([{opacity:0,transform:'translateY(14px) scale(.6)'},{opacity:1,transform:'translateY(0) scale(1.08)',offset:.25},{opacity:1,transform:'translateY(-4px) scale(1)',offset:.7},{opacity:0,transform:'translateY(-18px) scale(1)'}],{duration:1500,easing:'ease-out'});
+  }
+  function onScore(){
+    net.getAnimations().forEach(function(a){a.cancel()});
+    net.animate([{transform:'scale(1,1)'},{transform:'scale(.9,1.22)',offset:.25},{transform:'scale(1.07,.92)',offset:.55},{transform:'scale(1,1.03)',offset:.8},{transform:'scale(1,1)'}],{duration:760,easing:'ease-out'});
+    confetti(200,RIM_Y+6,46);
+    if(userShot){score++;$('#score').textContent=score;popText(CHEERS[(score-1)%CHEERS.length])}
+    else popText('SWISH!');
+  }
+
+  function launch(x0,y0,vx0,vy0,sl,isUser){
+    cancelAnimationFrame(raf);
+    st='flight';bx=x0;by=y0;vx=vx0;vy=vy0;slow=sl;scored=false;userShot=isUser;vr=vx0*.9;flightT=0;restT=0;last=0;
+    setIdleVisuals(false);clearAim();$('#hint').style.display='none';
+    raf=requestAnimationFrame(frame);
+  }
+  function frame(ts){
+    if(!last)last=ts;
+    var real=Math.min(.033,(ts-last)/1000);last=ts;
+    var dt=real*slow;flightT+=real;
+    var steps=Math.max(1,Math.ceil(dt/(1/240))),h=dt/steps;
+    for(var i=0;i<steps;i++){
+      var py=by;
+      vy+=G*h;bx+=vx*h;by+=vy*h;rot+=vr*h;
+      if(vy>0&&by>60&&by<RIM_Y&&Math.abs(bx-200)<46)vx+=(200-bx)*9*h;
+      if(vy>0&&py<RIM_Y&&by>=RIM_Y){
+        var dx=bx-200;
+        if(Math.abs(dx)<=27){if(!scored){scored=true;onScore()}}
+        else if(Math.abs(dx)<=56&&!scored){vy=-Math.abs(vy)*.42;vx+=(dx>0?1:-1)*140;by=RIM_Y-1}
+      }
+      if(by>FLOOR-R){
+        by=FLOOR-R;
+        if(Math.abs(vy)>140){vy=-vy*.58;vx*=.82;vr=vx*1.1}else{vy=0;vx*=.9;vr*=.9}
+      }
+      if(bx<R){bx=R;vx=-vx*.6}
+      if(bx>400-R){bx=400-R;vx=-vx*.6}
+    }
+    place();
+    var resting=by>=FLOOR-R-.5&&vy===0&&Math.abs(vx)<10;
+    if(resting)restT+=real;
+    if(restT>.45||flightT>7){endFlight();return}
+    raf=requestAnimationFrame(frame);
+  }
+  function endFlight(){
+    st='return';ret={x:bx,y:by,r:rot%360,t:0};last=0;
+    raf=requestAnimationFrame(retFrame);
+  }
+  function retFrame(ts){
+    if(!last)last=ts;
+    var real=Math.min(.033,(ts-last)/1000);last=ts;
+    ret.t+=real/.7;
+    var t=Math.min(1,ret.t),e=1-Math.pow(1-t,3);
+    bx=ret.x+(HOME.x-ret.x)*e;
+    by=ret.y+(HOME.y-ret.y)*e-Math.sin(Math.PI*t)*60;
+    rot=ret.r*(1-e);
+    place();
+    if(t>=1){bx=HOME.x;by=HOME.y;rot=0;place();st='idle';setIdleVisuals(true);if(!interacted)$('#hint').style.display='';return}
+    raf=requestAnimationFrame(retFrame);
+  }
+  function demo(isUser){
+    if(st!=='idle')return;
+    var t=1.2,vy0=(RIM_Y-HOME.y-.5*G*t*t)/t;
+    launch(HOME.x,HOME.y,0,vy0,isUser?1:.65,isUser);
+  }
+
+  /* aim preview + drag */
+  var aimDots=[];
+  for(var i=0;i<10;i++){var c=document.createElementNS(NS,'circle');c.setAttribute('r','3');c.style.display='none';aimG.appendChild(c);aimDots.push(c)}
+  function drawAim(vx0,vy0){
+    for(var i=0;i<aimDots.length;i++){
+      var t=(i+1)*.11,x=bx+vx0*t,y=by+vy0*t+.5*G*t*t,d=aimDots[i];
+      if(y>FLOOR-R||x<0||x>400){d.style.display='none';continue}
+      d.style.display='';d.setAttribute('cx',x.toFixed(1));d.setAttribute('cy',y.toFixed(1));d.setAttribute('opacity',(0.9-i*.07).toFixed(2));
+    }
+  }
+  function clearAim(){aimDots.forEach(function(d){d.style.display='none'})}
+
+  hit.addEventListener('pointerdown',function(e){
+    if(reduce||st!=='idle')return;
+    e.preventDefault();
+    try{hit.setPointerCapture(e.pointerId)}catch(x){}
+    st='drag';interacted=true;setIdleVisuals(false);$('#hint').style.display='none';
+    $('#hint-text').textContent='Let go to shoot';
+  });
+  hit.addEventListener('pointermove',function(e){
+    if(st!=='drag')return;
+    var p=toSvg(e),dx=p.x-HOME.x,dy=p.y-HOME.y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d>130){dx*=130/d;dy*=130/d}
+    bx=HOME.x+dx;by=HOME.y+dy;rot=0;place();drawAim(dx*K,dy*K);
+  });
+  function release(e){
+    if(st!=='drag')return;
+    try{hit.releasePointerCapture(e.pointerId)}catch(x){}
+    var dx=bx-HOME.x,dy=by-HOME.y,d=Math.sqrt(dx*dx+dy*dy);
+    clearAim();
+    $('#hint-text').textContent='Flick the ball up to shoot';
+    if(d<14){bx=HOME.x;by=HOME.y;place();st='idle';demo(true)}
+    else launch(bx,by,dx*K,dy*K,1,true);
+  }
+  hit.addEventListener('pointerup',release);
+  hit.addEventListener('pointercancel',release);
+  hit.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();interacted=true;$('#hint').style.display='none';demo(true)}
+  });
+
+  /* intro sequence + ambient life */
+  function enter(sel,delay,o){
+    o=o||{};
+    $(sel).animate(
+      [{opacity:0,transform:'translateY('+(o.y===undefined?10:o.y)+'px) scale('+(o.sx===undefined?1:o.sx)+','+(o.sy===undefined?1:o.sy)+')'},{opacity:1,transform:'none'}],
+      {duration:o.d||800,delay:delay,easing:o.e||'cubic-bezier(.2,.7,.2,1)',fill:'both'}
+    );
+  }
+  var INTRO_IDS=['#num','#t-eyebrow','#t-name','#t-rule','#t-title','#t-sub','#t-aus','#t-date'];
+  function stopIntro(){
+    timers.forEach(clearTimeout);timers=[];
+    INTRO_IDS.forEach(function(s){$(s).getAnimations().forEach(function(a){a.cancel()})});
+  }
+  function intro(){
+    if(reduce)return;
+    stopIntro();
+    enter('#t-eyebrow',250,{y:8});
+    timers.push(setTimeout(function(){demo(false)},1300));
+    enter('#num',3350,{y:0,sx:.5,sy:.5,d:900,e:'cubic-bezier(.2,1.4,.4,1)'});
+    enter('#t-name',4200,{y:12,d:900});
+    enter('#t-rule',4900,{y:0,sx:0,sy:1,d:700});
+    enter('#t-title',5300,{y:8,d:800});
+    enter('#t-sub',5900,{y:8,d:800});
+    enter('#t-aus',6500,{y:8,d:900});
+    enter('#t-date',7200,{y:6,d:800});
+  }
+  function sparkles(){
+    var g=$('#sparkles'),cols=['#B8893A','#E0662B','#fff','#B8893A'];
+    for(var i=0;i<18;i++){
+      var c=document.createElementNS(NS,'circle');
+      c.setAttribute('class','spark');c.setAttribute('cx',(14+Math.random()*372).toFixed(0));c.setAttribute('cy',(500+Math.random()*100).toFixed(0));
+      c.setAttribute('r',(1+Math.random()*1.8).toFixed(1));c.setAttribute('fill',cols[i%cols.length]);
+      c.style.setProperty('--d',(7+Math.random()*7).toFixed(1)+'s');c.style.setProperty('--dl','-'+(Math.random()*12).toFixed(1)+'s');
+      g.appendChild(c);
+    }
+  }
+
+  if(reduce){
+    $('#stage-bar').hidden=true;hit.hidden=true;$('#hint').style.display='none';
+    shadow.style.animation='none';net.style.animation='none';
+    document.querySelectorAll('animate').forEach(function(a){a.remove()});
+  }else{
+    sparkles();
+    intro();
+    $('#replay').addEventListener('click',function(){
+      if(st!=='idle')return;
+      intro();
+    });
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){stageVisible=es[0].isIntersecting},{threshold:.35}).observe($('#stage'));
+    }
+    // keep the shot coming until someone plays: a slow-motion swish every 12 seconds
+    setInterval(function(){
+      if(!interacted&&st==='idle'&&stageVisible&&!document.hidden)demo(false);
+    },12000);
+  }
+
+  /* =====================  RSVP  ===================== */
+  var form=$('#rsvp-form'),send=$('#send'),msgEl=$('#msg'),statusEl=$('#status'),errEl=$('#err');
+  function attending(){return $('#attend-yes').checked}
+  function syncAttend(){$('#roster-wrap').hidden=!attending()}
+  $('#attend-yes').addEventListener('change',syncAttend);
+  $('#attend-no').addEventListener('change',syncAttend);
+
+  function buildMessage(){
+    var name=$('#name').value.trim(),note=$('#note').value.trim(),n=party.seats;
+    var m="Amir's 1st Birthday RSVP, Fri Oct 30: "+name+" - ";
+    if(attending()){
+      var c=seatCount();
+      m+='YES, '+(c===n?(n===1?'1 guest':'all '+n+' guests'):c+' of '+n+' invited guests')+' coming.';
+    }else m+="Sorry, we can't make it. (Invited: "+n+")";
+    if(note)m+=' Note: '+note;
+    return m;
+  }
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!$('#name').value.trim()){
+      errEl.textContent='Please add your name so we know who is replying.';errEl.hidden=false;$('#name').focus();return;
+    }
+    if(attending()&&seatCount()===0){
+      errEl.textContent='Tap at least one jersey to confirm a guest, or choose Regretfully decline.';errEl.hidden=false;return;
+    }
+    errEl.hidden=true;
+    var m=buildMessage();
+    msgEl.textContent=m;
+    $('#sms').setAttribute('href','sms:+'+PHONE+'?&body='+encodeURIComponent(m));
+    statusEl.textContent='';
+    form.hidden=true;send.hidden=false;
+    send.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+  });
+  $('#edit').addEventListener('click',function(){send.hidden=true;form.hidden=false;$('#name').focus()});
+  function fallbackCopy(){
+    var r=document.createRange();r.selectNodeContents(msgEl);
+    var s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    statusEl.textContent='Message selected. Press and hold, then choose Copy.';
+  }
+  $('#copy').addEventListener('click',function(){
+    copyText(msgEl.textContent,function(ok){
+      if(ok)statusEl.textContent='Copied. Paste it into a text message to Sara.';else fallbackCopy();
+    });
+  });
+  $('#sms').addEventListener('click',function(){
+    statusEl.textContent='If your messages app did not open, tap Copy message and send it to the number below.';
+  });
+
+  syncAttend();
+})();
+</script>
+
+</body></html>
